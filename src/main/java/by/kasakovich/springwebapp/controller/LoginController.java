@@ -1,6 +1,7 @@
 package by.kasakovich.springwebapp.controller;
 
 import by.kasakovich.springwebapp.model.Login;
+import by.kasakovich.springwebapp.model.Query;
 import by.kasakovich.springwebapp.model.User;
 import by.kasakovich.springwebapp.service.UserService;
 import org.apache.ibatis.jdbc.ScriptRunner;
@@ -22,7 +23,7 @@ import static by.kasakovich.springwebapp.constants.ApplicationStringConstants.SQ
 
 @Controller
 public class LoginController {
-    UserService userService;
+    private UserService userService;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -45,7 +46,7 @@ public class LoginController {
         return "home";
     }
 
-    @GetMapping(value = "/login")
+    @GetMapping(/*value = */"/login")
     public ModelAndView showLogin() {
         ModelAndView modelAndView = new ModelAndView("login");
         modelAndView.addObject("login", new Login());
@@ -53,13 +54,13 @@ public class LoginController {
     }
 
 
-    @PostMapping(value = "/loginProcess")
+    @PostMapping(/*value = */"/loginProcess")
     public ModelAndView loginProcess(@ModelAttribute("login") Login login) {
         ModelAndView modelAndView;
         User user = userService.validateUser(login);
         if (null != user) {
-            modelAndView = new ModelAndView("welcome");
-            modelAndView.addObject("name", user.getName());
+            modelAndView = new ModelAndView("query");
+            modelAndView.addObject("query", new Query());
         } else {
             modelAndView = new ModelAndView("login");
             modelAndView.addObject("message", "Username or Password is wrong!!");

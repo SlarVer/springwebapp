@@ -1,34 +1,42 @@
 package by.kasakovich.springwebapp.model;
 
 import javax.persistence.*;
+import javax.persistence.Table;
 import java.util.Objects;
 
 import static by.kasakovich.springwebapp.constants.ApplicationStringConstants.*;
 
 @Entity
-@Table(name = TABLE_NAME)
+@Table(name = USERS_TABLE_NAME)
 public class User {
     @Id
-    @Column(name = COLUMN_ID)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = USERS_COLUMN_ID, length = 10)
+    private long id;
 
-    @Column(name = COLUMN_USERNAME)
+    @Column(name = USERS_COLUMN_USERNAME)
     private String username;
 
-    @Column(name = COLUMN_PASSWORD)
+    @Column(name = USERS_COLUMN_PASSWORD)
     private String password;
 
-    @Column(name = COLUMN_NAME)
+    @Column(name = USERS_COLUMN_NAME)
     private String name;
 
-    @Column(name = COLUMN_EMAIL)
+    @Column(name = USERS_COLUMN_EMAIL)
     private String email;
 
-    public void setId(int id) {
+    @Column(name = USERS_COLUMN_ROLE)
+    private Role role;
+
+    public User(){
+
+    }
+
+    public void setId(long id) {
         this.id = id;
     }
-    public int getId() {
+    public long getId() {
         return id;
     }
     public String getUsername() {
@@ -55,6 +63,12 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     @Override
     public boolean equals(Object o){
@@ -68,7 +82,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUsername(), getPassword(), getName(), getEmail());
+        return Objects.hash(getId(), getUsername(), getPassword(), getName(), getEmail(), getRole());
     }
 }
 

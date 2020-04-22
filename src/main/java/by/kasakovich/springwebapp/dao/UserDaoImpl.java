@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserDaoImpl implements by.kasakovich.springwebapp.dao.UserDao {
+public class UserDaoImpl implements UserDao {
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -17,6 +17,7 @@ public class UserDaoImpl implements by.kasakovich.springwebapp.dao.UserDao {
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
     public boolean register(User user) {
         String sql = "from User where username='"
                 + user.getUsername() + "' or email='" + user.getEmail() + "'";
@@ -28,6 +29,7 @@ public class UserDaoImpl implements by.kasakovich.springwebapp.dao.UserDao {
         return false;
     }
 
+    @Override
     public User validateUser(Login login) {
         String sql = "from User where username='"
                 + login.getUsername() + "' and password='" + login.getPassword() + "'";

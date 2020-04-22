@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service
-public class UserServiceImpl implements by.kasakovich.springwebapp.service.UserService {
+public class UserServiceImpl implements UserService {
     @Autowired
     public UserDao userDao;
 
