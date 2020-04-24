@@ -2,13 +2,12 @@ package by.kasakovich.springwebapp.dao;
 
 import by.kasakovich.springwebapp.model.*;
 import org.hibernate.SessionFactory;
-import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.sql.SQLSyntaxErrorException;
+import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,39 +25,40 @@ public class QueryDaoImpl implements QueryDao{
 
     @SuppressWarnings("unchecked")
     @Override
-    public List execute(Query query, User user/* Login login*/) {
+    public List execute(Query query, User user) {
         String request = query.getQuery();
-        List<Object> result = new ArrayList<>();
+        List<Object> resultList = new ArrayList<>();
         try {
             if (request.contains("SELECT")) {
                 List<Object[]> queryResult = entityManager.createNativeQuery(request).getResultList();
                 if (request.contains("rooster")) {
                     for (Object[] arr : queryResult) {
-                        result.add(new RoosterTable(arr));
+                        resultList.add(new RoosterTable(arr));
                     }
                 } else {
                     for (Object[] arr : queryResult) {
-                        result.add(new StafflistTable(arr));
+                        resultList.add(new StafflistTable(arr));
                     }
                 }
                 String queryInsert = "INSERT INTO query (user, query, result) VALUES ('" + user.getUsername() +
-                        "', '" + query.getQuery() + "', '" + result.size() + " rows selected');";
+                        "', '" + query.getQuery() + "', '" + resultList.size() + " rows selected');";
                 entityManager.createNativeQuery(queryInsert).executeUpdate();
             } else {
                 entityManager.createNativeQuery(request).executeUpdate();
                 String operationType = request.substring(0, request.indexOf(" "));
-                result.add(operationType + " successful");
+                resultList.add(operationType + " successful");
+                String parsedQuery = query.getQuery().replace("'", "''");
                 String queryInsert = "INSERT INTO query (user, query, result) VALUES ('" + user.getUsername() +
-                        "', '" + query.getQuery() + "', '" + operationType + " successful');";
+                        "', '" + parsedQuery + "', '" + resultList.get(0) + "');";
                 entityManager.createNativeQuery(queryInsert).executeUpdate();
             }
-        } catch (SQLGrammarException exception){
-            exception.printStackTrace();
+        } catch (PersistenceException exception){
             String queryInsert = "INSERT INTO query (user, query, result) VALUES ('" + user.getUsername() +
                     "', '" + query.getQuery() + "', '" + exception.getLocalizedMessage() + "');";
             entityManager.createNativeQuery(queryInsert).executeUpdate();
+            resultList.add("Query error, check logs for details");
         }
-        return result;
+        return resultList;
     }
 
 

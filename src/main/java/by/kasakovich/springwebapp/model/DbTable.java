@@ -1,6 +1,5 @@
 package by.kasakovich.springwebapp.model;
 
-import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,10 +7,6 @@ import java.util.List;
 public class DbTable {
     private String title;
     private List<String> data = new ArrayList<>();
-
-    public DbTable(){
-
-    }
 
     public DbTable(String title){
         this.title = title;

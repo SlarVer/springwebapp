@@ -1,7 +1,5 @@
 package by.kasakovich.springwebapp.model;
 
-import org.springframework.context.annotation.Bean;
-
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.util.Objects;
@@ -29,7 +27,7 @@ public class User {
     private String email;
 
     @Column(name = USERS_COLUMN_ROLE)
-    private Role role;
+    private String role;
 
     public User(){
 
@@ -69,10 +67,10 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
@@ -81,9 +79,7 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof by.kasakovich.springwebapp.model.User)) return false;
         by.kasakovich.springwebapp.model.User user = (by.kasakovich.springwebapp.model.User) o;
-        return //getId() == user.getId() &&
-                Objects.equals(getUsername(), user.getUsername()) &&
-                Objects.equals(getEmail(), user.getEmail());
+        return Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getEmail(), user.getEmail());
     }
 
     @Override

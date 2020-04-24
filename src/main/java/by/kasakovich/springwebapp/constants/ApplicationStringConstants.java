@@ -26,8 +26,5 @@ public class ApplicationStringConstants {
     public static final String QUERY_COLUMN_RESULT ="result";
 
     public static final String SQL_PATH = "../../src/main/resources/sql/firstInitialization.sql";
-
-    public static final String MODEL ="model";
-
 }
 

@@ -26,14 +26,6 @@ public class QueryController {
         this.queryService = queryService;
     }
 
-    /*@GetMapping("/query")
-    public ModelAndView showQuery(@ModelAttribute("user") User user){
-        ModelAndView modelAndView = new ModelAndView("query");
-        modelAndView.addObject("query", new Query());
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }*/
-
     @PostMapping("/scan")
     public ModelAndView showTables(){
         ModelAndView modelAndView = new ModelAndView("query");
@@ -52,18 +44,25 @@ public class QueryController {
         return modelAndView;
     }
 
+    @SuppressWarnings("unchecked")
     @PostMapping("/queryprocess")
     public ModelAndView queryProcess(@ModelAttribute("query") Query query, @ModelAttribute("user") User user){
         ModelAndView modelAndView = new ModelAndView("query");
         try {
-            List resultSet = queryService.execute(query, user);
             String condition;
-            if(resultSet.get(0) instanceof RoosterTable){
-                condition = "rooster";
-            } else if(resultSet.get(0) instanceof StafflistTable){
-                condition = "stafflist";
-            } else {
+            List resultSet = new ArrayList();
+            if (user.getRole().equals("User") && !query.getQuery().contains("SELECT")){
+                resultSet.add("Insufficient authority for this request!");
                 condition = "string";
+            } else {
+                resultSet = queryService.execute(query, user);
+                if (resultSet.get(0) instanceof RoosterTable) {
+                    condition = "rooster";
+                } else if (resultSet.get(0) instanceof StafflistTable) {
+                    condition = "stafflist";
+                } else {
+                    condition = "string";
+                }
             }
             modelAndView.addObject("condition", condition);
             modelAndView.addObject("resultset", resultSet);

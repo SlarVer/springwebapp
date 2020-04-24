@@ -23,6 +23,11 @@ public class UserDaoImpl implements UserDao {
                 + user.getUsername() + "' or email='" + user.getEmail() + "'";
         List<User> users = sessionFactory.getCurrentSession().createQuery(sql, User.class).getResultList();
         if (users.size() == 0) {
+            if (user.getUsername().equals("admin")){
+                user.setRole("Admin");
+            } else {
+                user.setRole("User");
+            }
             sessionFactory.getCurrentSession().persist(user);
             return true;
         }
@@ -34,7 +39,6 @@ public class UserDaoImpl implements UserDao {
         String sql = "from User where username='"
                 + login.getUsername() + "' and password='" + login.getPassword() + "'";
         List<User> users = sessionFactory.getCurrentSession().createQuery(sql, User.class).getResultList();
-
         return users.size() > 0 ? users.get(0) : null;
     }
 }

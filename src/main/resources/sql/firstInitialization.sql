@@ -11,10 +11,11 @@ CREATE TABLE users
     password VARCHAR(30) NOT NULL,
     name VARCHAR(30) DEFAULT NULL,
     email VARCHAR(30) DEFAULT NULL,
-    role int(10)
+    role VARCHAR(30)
 );
 
-INSERT INTO users (username, password, name, email) VALUES('admin', 'admin', 'admin', 'admin');
+INSERT INTO users (username, password, name, email, role) VALUES('admin', 'admin', 'admin', 'admin@gmail.com', 'Admin');
+INSERT INTO users (username, password, name, email, role) VALUES('user', 'qwerty123456', 'user', 'user@mail.ru', 'User');
 
 DROP TABLE IF EXISTS query;
 
