@@ -26,7 +26,7 @@ public class RegistrationController {
         return mav;
     }
 
-    @PostMapping(value = "/registerProcess")
+    @PostMapping(value = "/registerprocess")
     public ModelAndView addUser(@ModelAttribute("user") User user) {
         ModelAndView modelAndView;
         boolean isRegistered = userService.register(user);

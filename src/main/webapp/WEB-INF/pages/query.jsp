@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<form:form id="queryForm" modelAttribute="query" action="queryProcess" method="post">
+<form:form id="queryForm" modelAttribute="query" action="queryprocess" method="post">
     <table align="center">
         <tr>
             <td>
@@ -26,12 +26,49 @@
             </td>
         </tr>
         <tr></tr>
-
+        <c:choose>
+            <c:when test="${condition=='rooster'}">
+                <table border="1" align="center">
+                    <c:forEach items="${resultset}" var="row">
+                        <tr>
+                            <th>${row.nickname}</th>
+                            <th>${row.firstname}</th>
+                            <th>${row.surname}</th>
+                            <th>${row.position}</th>
+                            <th>${row.birthday}</th>
+                            <th>${row.weight}</th>
+                            <th>${row.height}</th>
+                            <th>${row.birthstate}</th>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:when>
+            <c:when test="${condition=='stafflist'}">
+                <table border="1" align="center">
+                    <c:forEach items="${resultset}" var="row">
+                        <tr>
+                            <th>${row.name}</th>
+                            <th>${row.position}</th>
+                            <th>${row.contractFrom}</th>
+                            <th>${row.contractTo}</th>
+                            <th>${row.email}</th>
+                            <th>${row.phone}</th>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:when>
+            <c:when test="${condition=='string'}">
+                <table align="center">
+                    <tr>
+                        <td>${resultset.get(0)}</td>
+                    </tr>
+                </table>
+            </c:when>
+        </c:choose>
     </table>
 </form:form>
 
-
-<form:form id="scanForm" modelAttribute="query" action="scanProcess" method="post">
+<form:form id="scanForm" modelAttribute="query" action="scan" method="post">
     <table align="center">
         <tr>
             <td></td>
@@ -49,6 +86,27 @@
                         <p>${field}</p>
                     </c:forEach>
                     </th>
+                </tr>
+            </c:forEach>
+        </table
+    </table>
+</form:form>
+
+<form:form id="scanForm" modelAttribute="query" action="logs" method="post">
+    <table align="center">
+        <tr>
+            <td></td>
+            <td align="left">
+                <form:button id="showlogs" name="showlogs">Show logs</form:button>
+            </td>
+        </tr>
+        <tr></tr>
+        <table border="1" align="center">
+            <c:forEach items="${logs}" var="log">
+                <tr>
+                    <th>${log.id}</th>
+                    <th>${log.query}</th>
+                    <th>${log.result}</th>
                 </tr>
             </c:forEach>
         </table>

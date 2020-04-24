@@ -7,10 +7,7 @@ import by.kasakovich.springwebapp.service.UserService;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.BufferedReader;
@@ -22,6 +19,7 @@ import java.sql.DriverManager;
 import static by.kasakovich.springwebapp.constants.ApplicationStringConstants.SQL_PATH;
 
 @Controller
+@SessionAttributes(value = "user")
 public class LoginController {
     private UserService userService;
 
@@ -46,7 +44,7 @@ public class LoginController {
         return "home";
     }
 
-    @GetMapping(/*value = */"/login")
+    @GetMapping("/login")
     public ModelAndView showLogin() {
         ModelAndView modelAndView = new ModelAndView("login");
         modelAndView.addObject("login", new Login());
@@ -54,13 +52,14 @@ public class LoginController {
     }
 
 
-    @PostMapping(/*value = */"/loginProcess")
+    @PostMapping("/loginprocess")
     public ModelAndView loginProcess(@ModelAttribute("login") Login login) {
         ModelAndView modelAndView;
         User user = userService.validateUser(login);
         if (null != user) {
             modelAndView = new ModelAndView("query");
             modelAndView.addObject("query", new Query());
+            modelAndView.addObject("user", user);
         } else {
             modelAndView = new ModelAndView("login");
             modelAndView.addObject("message", "Username or Password is wrong!!");

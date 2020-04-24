@@ -21,9 +21,9 @@ public class ApplicationStringConstants {
 
     public static final String QUERY_TABLE_NAME = "query";
     public static final String QUERY_COLUMN_ID = "id";
-
     public static final String QUERY_COLUMN_QUERY = "query";
     public static final String QUERY_COLUMN_USER ="user";
+    public static final String QUERY_COLUMN_RESULT ="result";
 
     public static final String SQL_PATH = "C:\\Work\\Projects\\springwebapp\\src\\main\\resources\\sql\\firstInitialization.sql";
 

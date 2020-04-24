@@ -22,7 +22,8 @@ CREATE TABLE query
 (
     id int(10) PRIMARY KEY AUTO_INCREMENT,
     user VARCHAR(20) NOT NULL,
-    query VARCHAR(255) NOT NULL
+    query VARCHAR(255) NOT NULL,
+    result VARCHAR(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS stafflist;

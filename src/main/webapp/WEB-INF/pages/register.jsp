@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<form:form id="regForm" modelAttribute="user" action="registerProcess" method="post">
+<form:form id="regForm" modelAttribute="user" action="registerprocess" method="post">
     <table align="center">
         <tr>
             <td>

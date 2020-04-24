@@ -1,5 +1,7 @@
 package by.kasakovich.springwebapp.model;
 
+import org.springframework.context.annotation.Bean;
+
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.util.Objects;
@@ -31,6 +33,10 @@ public class User {
 
     public User(){
 
+    }
+
+    public User(String username){
+        this.username = username;
     }
 
     public void setId(long id) {
