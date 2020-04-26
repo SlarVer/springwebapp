@@ -35,7 +35,7 @@ public class RegistrationController {
             modelAndView.addObject("login", new Login(user.getUsername(), user.getPassword()));
         } else {
             modelAndView = new ModelAndView("register");
-            modelAndView.addObject("message", "Username of email is already in use!");
+            modelAndView.addObject("message", "Username or email are already taken!");
         }
         return modelAndView;
     }

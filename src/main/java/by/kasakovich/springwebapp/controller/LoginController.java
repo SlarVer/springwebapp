@@ -62,7 +62,7 @@ public class LoginController {
             modelAndView.addObject("user", user);
         } else {
             modelAndView = new ModelAndView("login");
-            modelAndView.addObject("message", "Username or Password is wrong!!");
+            modelAndView.addObject("message", "Username or password is wrong!");
         }
         return modelAndView;
     }
