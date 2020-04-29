@@ -34,7 +34,7 @@
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" path="email" placeholder="Enter email">
                 </div>
-                <button type="submit" class="btn btn-success btn-block" id="login" name="Login">Login</button>
+                <button type="submit" class="btn btn-success btn-block" id="register" name="register">Register</button>
                 <c:if test="${message!=null}">
                     <div class="alert alert-danger" role="alert">
                             ${message}

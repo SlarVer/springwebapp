@@ -25,7 +25,7 @@
                 <button type="submit" class="btn btn-success btn-block" id="execute" name="execute">Execute</button>
                 <c:choose>
                     <c:when test="${condition=='rooster'}">
-                        <table class="table-bordered font border" align="center">
+                        <table class="table-bordered font" align="center">
                             <thead>
                                 <tr>
                                     <th>Nickname</th>
@@ -89,48 +89,55 @@
         <div class="col-md-4 col-sm-4 col-xs-12">
             <form:form id="logsform" class="query-container" modelAttribute="query" action="logs" method="post">
                 <button type="submit" class="btn btn-primary btn-block" id="scantables" name="scantables" align="center">Show logs</button>
-                <table class="table-bordered border" align="center">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Query</th>
-                            <th>Result</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${logs}" var="log">
+                <c:if test="${logs!=null}">
+                    <table class="table-bordered" align="center">
+                        <thead>
                             <tr>
-                                <th>${log.id}</th>
-                                <th>${log.query}</th>
-                                <th>${log.result}</th>
+                                <th>Id</th>
+                                <th>Query</th>
+                                <th>Result</th>
                             </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${logs}" var="log">
+                                <tr>
+                                        <th>${log.id}</th>
+                                        <th>${log.query}</th>
+                                        <th>${log.result}</th>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
             </form:form>
             <form:form id="scanform" class="query-container" modelAttribute="query" action="scan" method="post">
                 <button type="submit" class="btn btn-primary btn-block" id="scantables" name="scantables" align="center">Available tables</button>
-                <table class="table-bordered border" align="center">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Fields</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${tables}" var="table">
+                <c:if test="${tables!=null}">
+                    <table class="table-bordered" align="center">
+                        <thead>
                         <tr>
-                            <th>${table.title}</th>
-                            <th>
-                                <c:forEach items="${table.data}" var="field">
-                                    <p>${field}</p>
-                                </c:forEach>
-                            </th>
+                            <th>Name</th>
+                            <th>Fields</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${tables}" var="table">
+                            <tr>
+                                <th>${table.title}</th>
+                                <th>
+                                    <c:forEach items="${table.data}" var="field">
+                                        <p>${field}</p>
+                                    </c:forEach>
+                                </th>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
             </form:form>
+            <div class="form-group">
+                <a href="home" class="btn btn-secondary btn-block">Home</a>
+            </div>
         </div>
     </div>
 </div>

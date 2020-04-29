@@ -6,6 +6,7 @@ import by.kasakovich.springwebapp.service.QueryService;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -18,16 +19,23 @@ import java.util.List;
 @SessionAttributes(value = "user")
 public class QueryController {
     private QueryService queryService;
+    private ModelAndView modelAndView = new ModelAndView("query");
 
     @Autowired
     public void setQueryService(QueryService queryService) {
         this.queryService = queryService;
     }
 
+    @GetMapping("/query")
+    public ModelAndView query(){
+        modelAndView.addObject("query", new Query());
+        modelAndView.addObject("logs");
+        modelAndView.addObject("tables");
+        return modelAndView;
+    }
+
     @PostMapping("/scan")
     public ModelAndView showTables(){
-        ModelAndView modelAndView = new ModelAndView("query");
-        modelAndView.addObject("query", new Query());
         List<DbTable> tables = queryService.scanTables();
         modelAndView.addObject("tables", tables);
         return modelAndView;
@@ -35,8 +43,6 @@ public class QueryController {
 
     @PostMapping("/logs")
     public ModelAndView showLogs(@ModelAttribute("user") User user){
-        ModelAndView modelAndView = new ModelAndView("query");
-        modelAndView.addObject("query", new Query());
         List<Query> queries = queryService.showLogs(user);
         modelAndView.addObject("logs", queries);
         return modelAndView;
@@ -45,7 +51,6 @@ public class QueryController {
     @SuppressWarnings("unchecked")
     @PostMapping("/queryprocess")
     public ModelAndView queryProcess(@ModelAttribute("query") Query query, @ModelAttribute("user") User user){
-        ModelAndView modelAndView = new ModelAndView("query");
         try {
             String condition;
             List resultSet = new ArrayList();
